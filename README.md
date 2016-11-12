@@ -1,4 +1,4 @@
-# wikiStreams
-distributed analytics of live wikipedia changelog stream
+# twitterStreams
+distributed analytics of live tweet stream
 
 authors: Bjorn + Martijn
