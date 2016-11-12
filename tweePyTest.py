@@ -1,7 +1,24 @@
-resp = self.session.request('POST',
-                            url,
-                            data=self.body,
-                            timeout=self.timeout,
-                            stream=True,
-                            auth=auth,
-                            verify=self.verify)
+import tweepy
+
+TWITTER_APP_KEY = 'gw3sjQj6uHqlTBNiZ0QdJx2vm'
+TWITTER_APP_SECRET = 'ka1Eflo0qgRKVVDWPFVuT8WWznasMIgCNy5k1MUGR2CkEHssVq'
+TWITTER_KEY = "1327195448-Ymp318HWPQTDVj9axc1MDCMLwbmucj4yyl9pS90"
+TWITTER_SECRET = "5zsN8NuVQzb8dO87CrPE2OJdtvykvWuyXPJX6VwkAxD0n"
+
+
+class StreamListener(tweepy.StreamListener):
+    def on_status(self, status):
+        print(status.text)
+
+    def on_error(self, status_code):
+        if status_code == 420:
+            return False
+
+
+auth = tweepy.OAuthHandler(TWITTER_APP_KEY, TWITTER_APP_SECRET)
+auth.set_access_token(TWITTER_KEY, TWITTER_SECRET)
+api = tweepy.API(auth)
+
+stream_listener = StreamListener()
+stream = tweepy.Stream(auth=api.auth, listener=stream_listener)
+stream.filter(track=["trump", "clinton", "hillary clinton", "donald trump"])
