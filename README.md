@@ -23,11 +23,16 @@ Compile `librdkafka` and install requirements
 Usage
 =====
 
-# Run in separate tab
-docker run -p 2181:2181 -p 9092:9092 -e ADVERTISED_HOST=192.168.178.59 -e ADVERTISED_PORT=9092 spotify/kafka
+# Download Kafka, and run in separate tabs
+bin/zookeeper-server-start.sh config/zookeeper.properties
+bin/kafka-server-start.sh config/server.properties
+
+# Run once
+TOPIC='election'
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic $TOPIC
 
 # Run producer (twitter -> kafka)
 python3 tweePyTest.py
 
 # Run consumer (kafka -> print)
-SERVERS=192.168.178.65 python3 consumer_test.py
+SERVERS=$IP_OR_HOSTNAME python3 consumer_test.py
