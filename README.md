@@ -34,5 +34,6 @@ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 -
 # Run producer (twitter -> kafka)
 python3 tweePyTest.py
 
-# Run consumer (kafka -> print)
-SERVERS=$IP_OR_HOSTNAME python3 consumer_test.py
+# Run consumers (kafka -> print); may run multiple times on multiple hosts
+GROUPID='yourgroup' # see comments inside consumer_test.py
+SERVERS=$IP_OR_HOSTNAME GROUPID=$GROUPID python3 consumer_test.py
